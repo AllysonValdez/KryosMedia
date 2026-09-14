@@ -13,9 +13,7 @@ button,input,select{font:inherit}
 .app{min-height:100vh;display:grid;grid-template-columns:minmax(320px,440px) 1fr}
 .panel{background:#fff;padding:28px;border-right:1px solid var(--line);overflow:auto}
 .brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.brand-mark{display:grid;grid-template-columns:16px 16px;grid-template-rows:16px 16px;gap:4px}
-.brand-mark i{display:block;border-radius:3px;background:var(--ink)}
-.brand-mark i:first-child{background:var(--green)}
+.brand-mark{display:block;width:36px;height:36px;object-fit:contain;flex:0 0 auto}
 .brand-copy strong{display:block;font-size:18px;letter-spacing:-.02em}
 .brand-copy span{font-size:12px;color:var(--muted)}
 h1{font-size:28px;line-height:1.08;letter-spacing:-.04em;margin:0 0 8px}
@@ -59,7 +57,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <main class="app">
 <section class="panel">
   <div class="brand">
-    <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <img class="brand-mark" src="Asset%201.svg" alt="iCORE Technologies logo">
     <span class="brand-copy"><strong>iCORE Technologies</strong><span>Signature Studio</span></span>
   </div>
   <h1>Build a consistent email signature.</h1>
@@ -180,7 +178,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
     var product=d.showPay?'<tr><td style="padding:5px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#247c42;">iCOREPay by iCORE Technologies</td></tr>':"";
     var banner=d.showBanner?'<tr><td colspan="2" style="padding:16px 0 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:590px;background:#f5f8f6;border-left:5px solid #77d94e;"><tr><td style="padding:14px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:17px;line-height:1.25;font-weight:700;color:#101413;">Forming Stronger Financial Futures<br>with Strategic Ecosystem Partners</div><div style="padding-top:7px;font-size:11px;color:#4f5a56;">Regulated by the Bangko Sentral ng Pilipinas</div></td></tr></table></td></tr>':"";
     return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;max-width:590px;font-family:Arial,Helvetica,sans-serif;color:#101413;">'
-      +'<tr><td style="width:54px;vertical-align:top;padding:2px 16px 0 0;"><table role="presentation" cellpadding="0" cellspacing="3" border="0"><tr><td style="width:18px;height:18px;background:#77d94e;border-radius:2px;"></td><td style="width:18px;height:18px;background:#101413;border-radius:2px;"></td></tr><tr><td style="width:18px;height:18px;background:#101413;border-radius:2px;"></td><td style="width:18px;height:18px;background:#101413;border-radius:2px;"></td></tr></table></td>'
+      +'<tr><td style="width:70px;vertical-align:top;padding:2px 16px 0 0;"><img src="https://raw.githubusercontent.com/AllysonValdez/KryosMedia/main/icore-signature/Asset%201.svg" width="54" height="54" alt="iCORE Technologies" style="display:block;width:54px;height:54px;object-fit:contain;border:0;"></td>'
       +'<td style="vertical-align:top;border-left:1px solid #dce4e1;padding-left:16px;">'
       +'<table role="presentation" cellpadding="0" cellspacing="0" border="0">'
       +'<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:19px;line-height:1.2;font-weight:700;color:#101413;">'+esc(d.name||"Full Name")+'</td></tr>'

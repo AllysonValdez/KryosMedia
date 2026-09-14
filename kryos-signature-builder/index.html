@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KRYOS Signature Builder</title>
+<style>
+:root{--navy:#173B5F;--ink:#1f2937;--muted:#6b7280;--line:#d1d5db;--bg:#f5f7fa;--white:#fff}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}.wrap{max-width:980px;margin:40px auto;padding:0 20px}.top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}.brand h1{margin:0;font-size:28px;color:var(--navy)}.brand p{margin:6px 0 0;color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:var(--white);border:1px solid #e5e7eb;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(23,59,95,.06)}label{display:block;font-size:12px;font-weight:700;margin:0 0 6px;color:#374151}.field{margin-bottom:14px}input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px;outline:none}input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(23,59,95,.08)}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}.primary{background:var(--navy);color:#fff}.secondary{background:#eef2f7;color:var(--navy)}.danger{background:#fff1f2;color:#9f1239}.previewbox{min-height:260px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px dashed #cbd5e1;border-radius:12px;padding:24px}.hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}.templates{margin-top:20px}.template-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{background:#eef2f7;color:#173B5F;border-radius:999px;padding:8px 12px;font-size:12px}.status{font-size:12px;color:#166534;margin-top:10px;min-height:16px}@media(max-width:760px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.top{align-items:start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="brand"><h1>KRYOS Signature Builder</h1><p>Build a lightweight, Gmail-safe signature and copy it directly.</p></div></div>
+  <div class="grid">
+    <div class="card">
+      <div class="field"><label>Full name</label><input id="name" value="Allyson Keihl Valdez"></div>
+      <div class="field"><label>Role</label><input id="role" value="Founder"></div>
+      <div class="row">
+        <div class="field"><label>Email</label><input id="email" value="icy@madebykryos.net"></div>
+        <div class="field"><label>Phone (optional)</label><input id="phone" value="+63 917 179 4403"></div>
+      </div>
+      <div class="field"><label>Website</label><input id="website" value="madebykryos.net"></div>
+      <div class="actions">
+        <button class="primary" id="copyBtn">Copy signature</button>
+        <button class="secondary" id="saveBtn">Save template</button>
+        <button class="secondary" id="resetBtn">Reset</button>
+      </div>
+      <div class="status" id="status"></div>
+      <div class="templates">
+        <label>Saved templates</label>
+        <div class="template-list" id="templateList"></div>
+      </div>
+    </div>
+    <div class="card">
+      <label>Preview</label>
+      <div class="previewbox"><div id="preview"></div></div>
+      <div class="hint">This version intentionally uses no embedded image, keeping the copied HTML small enough for Gmail. Your KRYOS brand is carried by the typography and navy color.</div>
+    </div>
+  </div>
+</div>
+<script>
+const ids=['name','role','email','phone','website'];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+function data(){return Object.fromEntries(ids.map(id=>[id,$(id).value.trim()]));}
+function signatureHTML(){const d=data();const site=(d.website||'madebykryos.net').replace(/^https?:\/\//,'');const url='https://'+site;const tel=d.phone.replace(/[^+\d]/g,'');return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;color:#1f2937;"><tr><td style="padding:0;"><div style="font-size:14px;line-height:18px;font-weight:700;color:#173B5F;">${esc(d.name)}</div><div style="font-size:11px;line-height:16px;color:#4b5563;">${esc(d.role)}${d.role?', ':''}KRYOS Studios</div>${d.email?`<div style="font-size:10.5px;line-height:15px;"><a href="mailto:${esc(d.email)}" style="color:#374151;text-decoration:none;">${esc(d.email)}</a>${d.phone?` <span style="color:#9ca3af;">·</span> <a href="tel:${esc(tel)}" style="color:#374151;text-decoration:none;">${esc(d.phone)}</a>`:''}</div>`:''}<div style="font-size:10.5px;line-height:15px;"><a href="${esc(url)}" style="color:#173B5F;text-decoration:none;">${esc(site)}</a></div></td></tr></table>`}
+function render(){ $('preview').innerHTML=signatureHTML(); }
+ids.forEach(id=>$(id).addEventListener('input',render));
+$('copyBtn').addEventListener('click',async()=>{const html=signatureHTML();const text=$('preview').innerText;try{await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]);$('status').textContent='Copied. Paste directly into a new Gmail signature.';}catch(e){const r=document.createRange();r.selectNodeContents($('preview'));const s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();$('status').textContent='Copied. Paste directly into a new Gmail signature.';}});
+function templates(){return JSON.parse(localStorage.getItem('kryosSignatureTemplates')||'[]');}
+function setTemplates(v){localStorage.setItem('kryosSignatureTemplates',JSON.stringify(v));drawTemplates();}
+function drawTemplates(){const list=$('templateList');list.innerHTML='';templates().forEach((t,i)=>{const b=document.createElement('button');b.className='chip';b.textContent=t.name||('Template '+(i+1));b.onclick=()=>{ids.forEach(id=>$(id).value=t[id]||'');render();$('status').textContent='Template loaded.'};list.appendChild(b);});if(!templates().length)list.innerHTML='<span style="font-size:12px;color:#9ca3af">No saved templates yet.</span>';}
+$('saveBtn').onclick=()=>{const d=data();const label=prompt('Template name',d.name||'KRYOS Signature');if(!label)return;const arr=templates();arr.push({...d,name:label});setTemplates(arr);$('status').textContent='Template saved in this browser.'};
+$('resetBtn').onclick=()=>{$('name').value='';$('role').value='';$('email').value='';$('phone').value='';$('website').value='madebykryos.net';render();$('status').textContent='Fields reset.'};
+render();drawTemplates();
+</script>
+</body>
+</html>

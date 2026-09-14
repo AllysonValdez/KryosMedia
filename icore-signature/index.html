@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>iCORE Technologies Email Signature Generator</title>
+<meta name="description" content="Create, save, and copy standardized iCORE Technologies email signatures.">
+<style>
+:root{--ink:#101413;--muted:#66716d;--line:#dce4e1;--soft:#f4f7f6;--green:#77d94e;--green-dark:#247c42;--white:#fff;--danger:#b42318}
+*{box-sizing:border-box}
+body{margin:0;background:#edf2f0;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px}
+button,input,select{font:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:minmax(320px,440px) 1fr}
+.panel{background:#fff;padding:28px;border-right:1px solid var(--line);overflow:auto}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.brand-mark{display:grid;grid-template-columns:16px 16px;grid-template-rows:16px 16px;gap:4px}
+.brand-mark i{display:block;border-radius:3px;background:var(--ink)}
+.brand-mark i:first-child{background:var(--green)}
+.brand-copy strong{display:block;font-size:18px;letter-spacing:-.02em}
+.brand-copy span{font-size:12px;color:var(--muted)}
+h1{font-size:28px;line-height:1.08;letter-spacing:-.04em;margin:0 0 8px}
+.intro{color:var(--muted);line-height:1.5;margin:0 0 24px}
+.group{margin:0 0 16px}
+label{display:block;font-size:13px;font-weight:700;margin:0 0 7px}
+input,select{width:100%;border:1px solid #cbd6d2;border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(119,217,78,.18)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;margin:18px 0}
+.check input{width:18px;height:18px;accent-color:var(--green-dark)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+button{border:1px solid var(--line);border-radius:9px;padding:11px 13px;background:#fff;font-weight:700;cursor:pointer}
+button:hover{background:var(--soft)}
+button.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+button.primary:hover{background:#26302d}
+button.danger{color:var(--danger)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.rule{height:1px;background:var(--line);margin:24px 0}
+.template-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.template-row button{padding:0 14px}
+.hint{font-size:12px;line-height:1.45;color:var(--muted);margin:8px 0 0}
+.workspace{padding:32px;display:flex;flex-direction:column;min-width:0}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.toolbar-copy strong{display:block;font-size:14px}
+.toolbar-copy span{font-size:12px;color:var(--muted)}
+.toolbar-actions{display:flex;gap:9px;flex-wrap:wrap}
+.preview-shell{flex:1;min-height:510px;background:#fff;border:1px solid var(--line);border-radius:16px;display:flex;align-items:center;justify-content:center;padding:40px;box-shadow:0 18px 45px rgba(24,41,35,.08)}
+.preview-wrap{width:100%;max-width:690px}
+.email-context{border:1px solid #e2e7e5;border-radius:12px;overflow:hidden}
+.email-head{padding:14px 18px;border-bottom:1px solid #e7ecea;color:#59635f;font-size:13px}
+.email-body{padding:24px 20px}
+.sample{font-size:14px;color:#333;line-height:1.6;margin:0 0 26px}
+.toast{position:fixed;right:24px;bottom:24px;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.22);opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:none}
+@media(max-width:900px){.app{grid-template-columns:1fr}.panel{border-right:0;border-bottom:1px solid var(--line)}.workspace{padding:22px}.preview-shell{padding:18px;min-height:430px}}
+@media(max-width:520px){.panel{padding:22px 18px}.grid2,.actions{grid-template-columns:1fr}.toolbar{align-items:flex-start;flex-direction:column}.workspace{padding:18px 12px}.preview-shell{border-radius:12px;padding:12px}.email-body{padding:18px 12px}}
+</style>
+</head>
+<body>
+<main class="app">
+<section class="panel">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="brand-copy"><strong>iCORE Technologies</strong><span>Signature Studio</span></span>
+  </div>
+  <h1>Build a consistent email signature.</h1>
+  <p class="intro">Enter an employee's details, preview the result, then save the profile or copy the signature into Gmail or Outlook.</p>
+
+  <div class="group">
+    <label for="fullName">Full name</label>
+    <input id="fullName" value="Full Name" autocomplete="name">
+  </div>
+  <div class="grid2">
+    <div class="group">
+      <label for="position">Position</label>
+      <input id="position" value="Position">
+    </div>
+    <div class="group">
+      <label for="department">Department</label>
+      <input id="department" value="Department">
+    </div>
+  </div>
+  <div class="group">
+    <label for="email">Email address</label>
+    <input id="email" value="email@ictph.com" type="email" autocomplete="email">
+  </div>
+  <div class="grid2">
+    <div class="group">
+      <label for="phone">Phone</label>
+      <input id="phone" value="0917 193 6031" inputmode="tel">
+    </div>
+    <div class="group">
+      <label for="website">Website</label>
+      <input id="website" value="www.ictph.com" inputmode="url">
+    </div>
+  </div>
+  <label class="check"><input id="showBanner" type="checkbox" checked> Include campaign banner</label>
+  <label class="check"><input id="showPay" type="checkbox"> Add iCOREPay product line</label>
+
+  <div class="rule"></div>
+  <div class="group">
+    <label for="templateName">Template name</label>
+    <input id="templateName" value="Default iCORE Template">
+  </div>
+  <div class="group">
+    <label for="savedTemplates">Saved templates</label>
+    <div class="template-row">
+      <select id="savedTemplates" aria-label="Saved templates"></select>
+      <button id="loadBtn" type="button">Load</button>
+    </div>
+    <p class="hint">Templates are saved in this browser. They remain available when you return using the same browser and device.</p>
+  </div>
+  <div class="actions">
+    <button class="primary" id="saveBtn" type="button">Save as new</button>
+    <button id="updateBtn" type="button">Update selected</button>
+    <button class="danger" id="deleteBtn" type="button">Delete selected</button>
+    <button id="resetBtn" type="button">Reset fields</button>
+  </div>
+</section>
+
+<section class="workspace">
+  <div class="toolbar">
+    <div class="toolbar-copy"><strong>Live preview</strong><span>Email-client-safe table layout</span></div>
+    <div class="toolbar-actions">
+      <button id="downloadBtn" type="button">Download HTML</button>
+      <button class="primary" id="copyBtn" type="button">Copy signature</button>
+    </div>
+  </div>
+  <div class="preview-shell">
+    <div class="preview-wrap">
+      <div class="email-context">
+        <div class="email-head">New message</div>
+        <div class="email-body">
+          <p class="sample">Best regards,</p>
+          <div id="signaturePreview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var STORAGE_KEY = "icore-tech-signature-templates-v1";
+  var ids = ["fullName","position","department","email","phone","website","showBanner","showPay","templateName"];
+  var el = {};
+  ids.forEach(function(id){ el[id] = document.getElementById(id); });
+  var preview = document.getElementById("signaturePreview");
+  var savedSelect = document.getElementById("savedTemplates");
+  var toast = document.getElementById("toast");
+  var selectedId = null;
+
+  function esc(value){
+    return String(value || "").replace(/[&<>"']/g,function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch];
+    });
+  }
+  function hrefWebsite(value){
+    var v=String(value||"").trim();
+    return /^https?:\/\//i.test(v)?v:"https://"+v;
+  }
+  function tel(value){ return "tel:"+String(value||"").replace(/[^\d+]/g,""); }
+  function getData(){
+    return {
+      id:selectedId,
+      name:el.fullName.value.trim(),
+      position:el.position.value.trim(),
+      department:el.department.value.trim(),
+      email:el.email.value.trim(),
+      phone:el.phone.value.trim(),
+      website:el.website.value.trim(),
+      showBanner:el.showBanner.checked,
+      showPay:el.showPay.checked,
+      templateName:el.templateName.value.trim() || "Untitled Template"
+    };
+  }
+  function signatureHTML(d){
+    var role=[d.position,d.department].filter(Boolean).join(" · ");
+    var product=d.showPay?'<tr><td style="padding:5px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#247c42;">iCOREPay by iCORE Technologies</td></tr>':"";
+    var banner=d.showBanner?'<tr><td colspan="2" style="padding:16px 0 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:590px;background:#f5f8f6;border-left:5px solid #77d94e;"><tr><td style="padding:14px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:17px;line-height:1.25;font-weight:700;color:#101413;">Forming Stronger Financial Futures<br>with Strategic Ecosystem Partners</div><div style="padding-top:7px;font-size:11px;color:#4f5a56;">Regulated by the Bangko Sentral ng Pilipinas</div></td></tr></table></td></tr>':"";
+    return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;max-width:590px;font-family:Arial,Helvetica,sans-serif;color:#101413;">'
+      +'<tr><td style="width:54px;vertical-align:top;padding:2px 16px 0 0;"><table role="presentation" cellpadding="0" cellspacing="3" border="0"><tr><td style="width:18px;height:18px;background:#77d94e;border-radius:2px;"></td><td style="width:18px;height:18px;background:#101413;border-radius:2px;"></td></tr><tr><td style="width:18px;height:18px;background:#101413;border-radius:2px;"></td><td style="width:18px;height:18px;background:#101413;border-radius:2px;"></td></tr></table></td>'
+      +'<td style="vertical-align:top;border-left:1px solid #dce4e1;padding-left:16px;">'
+      +'<table role="presentation" cellpadding="0" cellspacing="0" border="0">'
+      +'<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:19px;line-height:1.2;font-weight:700;color:#101413;">'+esc(d.name||"Full Name")+'</td></tr>'
+      +'<tr><td style="padding:3px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.35;color:#52605b;">'+esc(role||"Position · Department")+'</td></tr>'
+      +product
+      +'<tr><td style="padding:10px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.65;color:#39423f;">'
+      +'<a href="mailto:'+esc(d.email)+'" style="color:#247c42;text-decoration:none;">'+esc(d.email)+'</a><br>'
+      +'<a href="'+esc(tel(d.phone))+'" style="color:#39423f;text-decoration:none;">'+esc(d.phone)+'</a>'
+      +' <span style="color:#aab4b0;">&nbsp;|&nbsp;</span> '
+      +'<a href="'+esc(hrefWebsite(d.website))+'" style="color:#247c42;text-decoration:none;">'+esc(d.website)+'</a>'
+      +'</td></tr></table></td></tr>'+banner+'</table>';
+  }
+  function render(){ preview.innerHTML=signatureHTML(getData()); }
+  function templates(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");}catch(e){return [];}
+  }
+  function persist(items){localStorage.setItem(STORAGE_KEY,JSON.stringify(items));}
+  function refreshSelect(){
+    var items=templates();
+    savedSelect.innerHTML='<option value="">Select a template</option>'+items.map(function(item){
+      return '<option value="'+esc(item.id)+'">'+esc(item.templateName)+'</option>';
+    }).join("");
+    if(selectedId){savedSelect.value=selectedId;}
+    document.getElementById("updateBtn").disabled=!selectedId;
+    document.getElementById("deleteBtn").disabled=!selectedId;
+  }
+  function applyData(d){
+    el.fullName.value=d.name||"";
+    el.position.value=d.position||"";
+    el.department.value=d.department||"";
+    el.email.value=d.email||"";
+    el.phone.value=d.phone||"0917 193 6031";
+    el.website.value=d.website||"www.ictph.com";
+    el.showBanner.checked=d.showBanner!==false;
+    el.showPay.checked=!!d.showPay;
+    el.templateName.value=d.templateName||"Untitled Template";
+    selectedId=d.id||null; refreshSelect(); render();
+  }
+  function say(message){toast.textContent=message;toast.classList.add("show");setTimeout(function(){toast.classList.remove("show");},2200);}
+  ids.forEach(function(id){el[id].addEventListener("input",render);el[id].addEventListener("change",render);});
+
+  document.getElementById("saveBtn").addEventListener("click",function(){
+    var item=getData(); item.id="tpl-"+Date.now();
+    var items=templates();items.push(item);persist(items);selectedId=item.id;refreshSelect();say("Template saved");
+  });
+  document.getElementById("loadBtn").addEventListener("click",function(){
+    var item=templates().find(function(x){return x.id===savedSelect.value;});
+    if(!item){say("Choose a saved template first");return;} applyData(item);say("Template loaded");
+  });
+  savedSelect.addEventListener("change",function(){selectedId=savedSelect.value||null;refreshSelect();});
+  document.getElementById("updateBtn").addEventListener("click",function(){
+    if(!selectedId)return;
+    var items=templates();var index=items.findIndex(function(x){return x.id===selectedId;});
+    if(index<0)return;var updated=getData();updated.id=selectedId;items[index]=updated;persist(items);refreshSelect();say("Template updated");
+  });
+  document.getElementById("deleteBtn").addEventListener("click",function(){
+    if(!selectedId)return;
+    var items=templates().filter(function(x){return x.id!==selectedId;});persist(items);selectedId=null;refreshSelect();say("Template deleted");
+  });
+  document.getElementById("resetBtn").addEventListener("click",function(){
+    applyData({name:"Full Name",position:"Position",department:"Department",email:"email@ictph.com",phone:"0917 193 6031",website:"www.ictph.com",showBanner:true,showPay:false,templateName:"Default iCORE Template"});
+  });
+  document.getElementById("copyBtn").addEventListener("click",async function(){
+    var html=signatureHTML(getData());
+    var plain=[getData().name,[getData().position,getData().department].filter(Boolean).join(" · "),getData().email,getData().phone,getData().website].filter(Boolean).join("\n");
+    try{
+      if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+        await navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([html],{type:"text/html"}),"text/plain":new Blob([plain],{type:"text/plain"})})]);
+      }else{
+        var range=document.createRange();range.selectNode(preview);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);document.execCommand("copy");sel.removeAllRanges();
+      }
+      say("Signature copied — paste it into your email settings");
+    }catch(e){say("Copy was blocked. Select the preview and copy manually.");}
+  });
+  document.getElementById("downloadBtn").addEventListener("click",function(){
+    var doc='<!doctype html><meta charset="utf-8"><body>'+signatureHTML(getData())+'</body>';
+    var url=URL.createObjectURL(new Blob([doc],{type:"text/html"}));var a=document.createElement("a");
+    a.href=url;a.download=(getData().name||"icore-signature").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".html";a.click();URL.revokeObjectURL(url);say("HTML downloaded");
+  });
+  refreshSelect();render();
+})();
+</script>
+</body>
+</html>

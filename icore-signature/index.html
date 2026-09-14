@@ -176,7 +176,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   function signatureHTML(d){
     var role=[d.position,d.department].filter(Boolean).join(" · ");
     var product=d.showPay?'<tr><td style="padding:5px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#247c42;">iCOREPay by iCORE Technologies</td></tr>':"";
-    var banner=d.showBanner?'<tr><td colspan="2" style="padding:16px 0 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:590px;background:#f5f8f6;border-left:5px solid #77d94e;"><tr><td style="padding:14px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:17px;line-height:1.25;font-weight:700;color:#101413;">Forming Stronger Financial Futures<br>with Strategic Ecosystem Partners</div><div style="padding-top:7px;font-size:11px;color:#4f5a56;">Regulated by the Bangko Sentral ng Pilipinas</div></td></tr></table></td></tr>':"";
+    var banner=d.showBanner?'<tr><td colspan="2" style="padding:16px 0 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:590px;background:#f5f8f6;border-left:5px solid #77d94e;"><tr><td style="padding:14px 12px 14px 16px;font-family:Arial,Helvetica,sans-serif;vertical-align:middle;"><div style="font-size:17px;line-height:1.25;font-weight:700;color:#101413;">Forming Stronger Financial Futures<br>with Strategic Ecosystem Partners</div><div style="padding-top:7px;font-size:11px;color:#4f5a56;">Regulated by the Bangko Sentral ng Pilipinas</div></td><td style="width:118px;padding:10px 14px 10px 0;vertical-align:middle;text-align:right;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" align="right"><tr><td style="padding-right:8px;vertical-align:middle;"><img src="https://raw.githubusercontent.com/AllysonValdez/KryosMedia/main/icore-signature/ONAC.png" height="52" alt="ONAC Acreditado" style="display:block;height:52px;width:auto;border:0;"></td><td style="vertical-align:middle;"><img src="https://raw.githubusercontent.com/AllysonValdez/KryosMedia/main/icore-signature/ICA.jpg" height="52" alt="ICA ISO 9001:2015 Certified" style="display:block;height:52px;width:auto;border:0;"></td></tr></table></td></tr></table></td></tr>':"";
     return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;max-width:590px;font-family:Arial,Helvetica,sans-serif;color:#101413;">'
       +'<tr><td style="width:70px;vertical-align:top;padding:2px 16px 0 0;"><img src="https://raw.githubusercontent.com/AllysonValdez/KryosMedia/main/icore-signature/Asset%201.png" width="54" alt="iCORE Technologies" style="display:block;width:54px;height:auto;border:0;"></td>'
       +'<td style="vertical-align:top;border-left:1px solid #dce4e1;padding-left:16px;">'
@@ -190,10 +190,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
       +' <span style="color:#aab4b0;">&nbsp;|&nbsp;</span> '
       +'<a href="'+esc(hrefWebsite(d.website))+'" style="color:#247c42;text-decoration:none;">'+esc(d.website)+'</a>'
       +'</td></tr>'
-      +'<tr><td style="padding:12px 0 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>'
-      +'<td style="vertical-align:middle;padding:0 10px 0 0;"><img src="https://raw.githubusercontent.com/AllysonValdez/KryosMedia/main/icore-signature/ONAC.png" height="46" alt="ONAC Acreditado" style="display:block;height:46px;width:auto;border:0;"></td>'
-      +'<td style="vertical-align:middle;"><img src="https://raw.githubusercontent.com/AllysonValdez/KryosMedia/main/icore-signature/ICA.jpg" height="46" alt="ICA ISO 9001:2015 Certified" style="display:block;height:46px;width:auto;border:0;"></td>'
-      +'</tr></table></td></tr>'
       +'</table></td></tr>'+banner+'</table>';
   }
   function render(){ preview.innerHTML=signatureHTML(getData()); }

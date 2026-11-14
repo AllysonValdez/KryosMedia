@@ -202,7 +202,7 @@ details[open] summary{margin-bottom:12px}
       <div class="group">
         <label for="qrDestination">Built-in QR destination</label>
         <select id="qrDestination">
-          <option value="certificate">ICA certificate lookup</option>
+          <option value="certificate">iCORE ISO certificate (IAF)</option>
           <option value="website">iCORE Technologies website</option>
         </select>
       </div>
@@ -320,8 +320,8 @@ details[open] summary{margin-bottom:12px}
 
 <script>
 (function(){
-  var ICA_LOOKUP = "https://www.ica-cb.com/certification";
-  var CERTIFICATE_QR = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoCAAAAADObDPFAAADXklEQVR42u3d22rrMBAFULuc//9l9d1g5qJRyglr3tomsbsYwUZWpHtdKlM/CECBAgUKFCgFChQoUKBAgVKgQIECBQqUAgUKFChQoEApUKBAgfrf6l/0grv5wevx/pX83Lf3Ra+ful8dZeiBAgUKlAI1laOyOSPKMW956i0nRa9bh+9XRxl6oECBAgVKTeWoKHes4PfVfBXlpTt5/er96ihDDxQoUKAUqFM5aip3XcX89Pacb+koQw8UKAUKFKgvzVHd9Uu3jjL0QClQoECB+rIc1Z3/eZtP2n0+F81LLR1l6IECBUqBAvXHOao7PxQ9j5v6eep+dRQoUKBAgVKgsjHn9PqibJ5ZQ+/TUYYeKFCgFChQH6r0/lHR/gS734urrhtfxc/J/h86ytADBQoUKAUqG1+6Oaf6/bnqc7bqc7zp3KWjDD1QoECBAqWCan9fbyrndHNYN69V56F0lKEHChQoUKDUdI7azUVXMc9MrSuv7vepoww9UKBAgQKl3uJHlB+i9VDVc/Ou5PW6eaf6f+goQw8UKFCgFKhTOSqbp65m/pl6LngV76ea83SUoQcKFChQoNSj2vtwZuepst/ny85vVfPW1PkxOgoUKFCgQIFSz5jRnY96y0NRjsnmqVN/7+YrHQUKFChQoECpR6Xno6b2Y8quQ5+ad7qbuUlHgQIFChQoUGoqR1XXf0+tC++em5c9z09HGXqgQIECpUCdylHVeafdc/ii63f30+zux6CjQIECBQoUKNXNUdn5oGw+yb6u+hwxe986ytADBQoUKAVqqLbPhTlVp69jPsrQAwUKFCgF6lM5qn2BIL90z+WbPtfP/lGGHihQoEApUMVKr4+q1krmnmquyp4PM71OSkeBAgUKFChQqpqjrmLeyK5bip4T3s33Vc/zc76eoQcKFChQCtTpHBXlpN19oLLryrvP77LzYTrK0AMFChQoBepUjprOXd18VP1+4O4+VzrK0AMFChQoUOrTOeotN1X32azuozm9P6iOAgUKFChQoNRujlqbr6+ew7eC32f3Y6g+J9RRhh4oUKBAgVJTOWp3n/Ldc4aj+9k9h0ZHgQIFChQoBaoacxYDHQUKFChQoBQoUKBAgQIFSoECBQoUKFAKFChQoECBAqVAgQIFCtR31i+297tjr5By/gAAAABJRU5ErkJggg==";
+  var IAF_CERTIFICATE = "https://www.iafcertsearch.org/certification/3inG7dZSCxN7m5U2o60G6lol";
+  var CERTIFICATE_QR = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUgAAAFICAAAAAAXfzjvAAAEC0lEQVR42u3dy24bMRAEwGWQ///l9TmG5ZkeUrIRVd8M61kggQa15K77khP5gwAkSJACEiRIkAISJEgBCRIkSAEJEiRIAQkSpIAECRKkgAQJEqSA/C35Wz1gDV/4/vT8u/k+d/H3NXzcqe9jRJraIEEKSJAgpdcjuz0q7Wm7vXAVPfTV38eINLVBghSQIEHqkbNela43TtcZV/g+Vb+cfh8j0tQGCVJAggSpR742j3pd1Q/v5uvs9kEj0tQGKSBBggQpv6NH3mFP7K4npuufRqSpDVJAggQpIH+2R6a9LF1nnP7+3P19fPf7GJGmNkiQAhIkSMl65Np8o+7+mGr9Md3X/azvY0Sa2iBBCkiQIN8869X3RUzP5Un74fQ6SiPS1AYpIEGCBClR4vMju/tjuvtfuuuP6ftP93Vfw+9jRJraIEEKSJAg3yyru1+lm+m63/Qc8rQXVv11un5pRJraIEEKSJAg3yzb55Cv4u9uD+z21rT3neq1RqSpDRKkgAQJUrIe2b1+8VEPS9cRqz5ZnWfe7adpvzUiTW2QIAUkSJCS9ci0Z3Wvlzx9Hnn19+5+btdHmtogQQpIkCDl37q02wt39+FM92en55Cn90s0Ik1tkAISJEiQstcju71s2hur/pleD7m7npn2VSPS1AYJUkCCBKlH7vXJq+iZu+uB3d56Dz932huNSFMbJEgBCRKkHjnrb1fY56Y9sLsu+aw+2/3+RqSpDRKkgAQJUo+c9ajd5+3+3p2+/+nrJY1IUxskSAEJEuSbpX3uT7ouOP39edoH09ednnduRJraIEEKSJAgpdcju+c4Vn8/6mnP2r8zPUfSeqSpDVJAggQJUlo5fu5Pt5+l65an7s/o+khTG6SABAkSpBzJ9n0Ru//v9tDd+12v4nnpfhu/a5vaIEEKSJAgZdYjT+2v6Z67s8LXP3X9pOsjTW2QAhIkSJCS1b5n78M+1f+qnnv6PEgj0tQGKSBBggQpez1yen+Y0+eLd3tj+rjqedYjTW2QIAUkSJAy65Hbb1D0zm5vne6LOX0fRSPS1AYJUkCCBCnXdW2c+1PlDntY9Trd6ymn55Pfm9/XiDS1QYIUkCBB6pHf97m0d07Pmez2xM+vU60/nt53bkSa2iBBCkiQIPXIWU9M+1e67rd7/Wb3cek5l0akqQ0SpIAECVKPfG5O3d/mUa9M72+4mu9vRJraIAUkSJAg5Wd75FX0tG6fTF+/+n28+znsszG1QYIUkCBBypkeeercyOr/3XXF63AfdH2kqQ1SQIIECVLO9sj1og803R+Tfs7u+UCujzS1QYIUkCBBytd16mZgRIIEKSBBggQpIEGCFJAgQYIUkCBBghSQIEEKSJAgQQpIkCBBCkiQ/1c+AAZqAquaCE8FAAAAAElFTkSuQmCC";
   var QR_WEBSITE = "https://www.icoretech.xyz/";
   var STORAGE_KEY = "icore-tech-signature-templates-v1";
   var ids = ["signatureLayout","fullName","position","department","email","phone","website","trunkline","address","showBanner","showPay","templateName","productText","bannerTitle","bannerNote","emailLabel","trunklineLabel","phoneLabel","addressLabel","websiteLabel","qrLink","qrDestination","logoUrl","logoAlt","qrUrl","qrAlt","isoUrl","isoAlt","isoStandard","isoIssuer","isoNumber","isoExpiry","isoVerify"];
@@ -414,7 +414,7 @@ details[open] summary{margin-bottom:12px}
     var certificateQR=key==="qr"&&d.qrDestination==="certificate";
     var upload=/^data:image\/(?:png|jpeg|webp);base64,/i.test(image.upload)?image.upload:"";
     var url=httpsURL(image.url)||upload||(certificateQR?CERTIFICATE_QR:(mode==="email"?fallback.hosted:fallback.embedded));
-    var alt=certificateQR&&!httpsURL(image.url)&&!upload&&image.alt===fallback.alt?"Scan to look up the ISO certificate on ICA":image.alt;
+    var alt=certificateQR&&!httpsURL(image.url)&&!upload&&image.alt===fallback.alt?"Scan to view iCORE’s ISO certificate on IAF CertSearch":image.alt;
     if(!url) return "";
     var style=key==="logo"?"display:block;margin:0 auto;border:0;":"display:block;border:0;";
     return '<img src="'+esc(url)+'" width="'+fallback.width+'"'
@@ -423,7 +423,7 @@ details[open] summary{margin-bottom:12px}
   }
 
   function builtInQRLink(){
-    return el.qrDestination.value==="website"?QR_WEBSITE:ICA_LOOKUP;
+    return el.qrDestination.value==="website"?QR_WEBSITE:IAF_CERTIFICATE;
   }
 
   function contactDetails(d){
@@ -576,7 +576,11 @@ details[open] summary{margin-bottom:12px}
     var savedQR=(d.images||{}).qr;
     var customQR=savedQR&&(savedQR.url||savedQR.upload);
     el.qrDestination.value=d.qrDestination==="website"||(!d.qrDestination&&d.id)?"website":"certificate";
-    el.qrLink.value=customQR||savedQR?.hidden ? (d.qrLink||"") : (d.qrLink||builtInQRLink());
+    var savedQRLink=d.qrLink||"";
+    if(!customQR&&el.qrDestination.value==="certificate"&&savedQRLink==="https://www.ica-cb.com/certification"){
+      savedQRLink=IAF_CERTIFICATE;
+    }
+    el.qrLink.value=customQR||savedQR?.hidden ? savedQRLink : (savedQRLink||builtInQRLink());
     imageKeys.forEach(function(key){
       var image=(d.images||{})[key]||{};
       imageReads[key]=null;

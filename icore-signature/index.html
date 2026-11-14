@@ -92,6 +92,13 @@ details[open] summary{margin-bottom:12px}
 <section class="panel">
   
   <h2>Signature details</h2>
+  <div class="group">
+    <label for="signatureLayout">Signature layout</label>
+    <select id="signatureLayout">
+      <option value="redesigned">Redesigned</option>
+      <option value="classic">Classic</option>
+    </select>
+  </div>
 
   <div class="group">
     <label for="fullName">Full name</label>
@@ -308,7 +315,7 @@ details[open] summary{margin-bottom:12px}
 (function(){
   var QR_WEBSITE = "https://www.icoretech.xyz/";
   var STORAGE_KEY = "icore-tech-signature-templates-v1";
-  var ids = ["fullName","position","department","email","phone","website","trunkline","address","showBanner","showPay","templateName","productText","bannerTitle","bannerNote","emailLabel","trunklineLabel","phoneLabel","addressLabel","websiteLabel","qrLink","logoUrl","logoAlt","qrUrl","qrAlt","isoUrl","isoAlt","isoStandard","isoIssuer","isoNumber","isoExpiry","isoVerify"];
+  var ids = ["signatureLayout","fullName","position","department","email","phone","website","trunkline","address","showBanner","showPay","templateName","productText","bannerTitle","bannerNote","emailLabel","trunklineLabel","phoneLabel","addressLabel","websiteLabel","qrLink","logoUrl","logoAlt","qrUrl","qrAlt","isoUrl","isoAlt","isoStandard","isoIssuer","isoNumber","isoExpiry","isoVerify"];
   var el = {};
   ids.forEach(function(id){ el[id] = document.getElementById(id); });
   var preview = document.getElementById("signaturePreview");
@@ -361,6 +368,7 @@ details[open] summary{margin-bottom:12px}
     settings.qrLink=el.qrLink.value.trim();
     return Object.assign(settings,{
       id:selectedId,
+      layout:el.signatureLayout.value,
       name:el.fullName.value.trim(),
       position:el.position.value.trim(),
       department:el.department.value.trim(),
@@ -433,25 +441,18 @@ details[open] summary{margin-bottom:12px}
     var lines=details.map(function(detail){
       return '<div style="overflow-wrap:anywhere;">'+(detail[1]?'<strong>'+detail[0]+':</strong> '+esc(detail[1]):'<span style="color:#63778b;">'+detail[0]+'</span>')+'</div>';
     }).join("");
+    var classic=d.layout==="classic";
     var verification=verify?'<div><a href="'+esc(verify)+'" style="color:#153b63;text-decoration:underline;">ICA website</a></div>':"";
-    return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border:1px solid #d6e4e9;border-top:0;">'
-      +'<tr><td bgcolor="#f3f7f8" style="padding:11px 14px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:17px;color:#20354a;">'
+    return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;'+(classic?"border-top:1px solid #dce4e1;":"border:1px solid #d6e4e9;border-top:0;")+'">'
+      +'<tr><td bgcolor="'+(classic?"#f5f8fb":"#f3f7f8")+'" style="padding:'+(classic?"9px 12px":"11px 14px")+';font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:17px;color:#20354a;">'
       +'<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>'
       +(badge?'<td valign="middle" style="padding-right:12px;">'+badge+'</td>':"")
       +'<td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:17px;color:#20354a;">'
-      +'<div style="padding-bottom:3px;font-size:12px;line-height:16px;color:#10283d;"><strong>Quality Management System Certification</strong></div>'+lines+verification+'</td>'
+      +(classic?'<strong>Quality Management System Certification</strong>':'<div style="padding-bottom:3px;font-size:12px;line-height:16px;color:#10283d;"><strong>Quality Management System Certification</strong></div>')+lines+verification+'</td>'
       +'</tr></table></td></tr></table>';
   }
 
-  function signatureHTML(d,mode){
-    var contacts=contactDetails(d).map(function(detail){
-      var value=esc(detail[1]);
-      if(detail[2]){
-        value='<a href="'+esc(detail[2])+'" style="color:#153b63;text-decoration:underline;">'+value+'</a>';
-      }
-      return '<tr><td style="padding:1px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;color:#20354a;overflow-wrap:anywhere;">'
-        +(detail[0]?'<strong>'+esc(detail[0])+':</strong> ':'')+value+'</td></tr>';
-    }).join("");
+  function redesignedSignatureHTML(d,mode,contacts){
     var position=d.position?'<div style="margin-top:3px;font-size:14px;font-weight:700;line-height:19px;color:#245733;overflow-wrap:anywhere;">'+esc(d.position)+'</div>':"";
     var department=d.department?'<div style="font-size:12px;line-height:17px;color:#43596d;overflow-wrap:anywhere;">'+esc(d.department)+'</div>':"";
     var product=d.showPay&&d.productText?'<div style="margin-top:5px;font-size:12px;line-height:17px;color:#245733;overflow-wrap:anywhere;">'+esc(d.productText)+'</div>':"";
@@ -479,6 +480,52 @@ details[open] summary{margin-bottom:12px}
     return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:540px;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">'
       +'<tr><td>'+identity+'</td></tr>'+footer+'</table>';
   }
+  function classicSignatureHTML(d,mode,contacts){
+    var position=d.position?'<tr><td style="padding-top:3px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:19px;color:#20354a;">'+esc(d.position)+'</td></tr>':"";
+    var department=d.department?'<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;font-style:italic;color:#526278;">'+esc(d.department)+'</td></tr>':"";
+    var product=d.showPay&&d.productText?'<tr><td style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:17px;font-weight:700;color:#247c42;">'+esc(d.productText)+'</td></tr>':"";
+    var contactBlock=contacts?'<tr><td style="padding-top:11px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0">'+contacts+'</table></td></tr>':"";
+    var qr=imageHTML(d,"qr",mode);
+    var qrLink=httpsURL(d.qrLink);
+    if(qr&&qrLink) qr='<a href="'+esc(qrLink)+'">'+qr+'</a>';
+    if(!qr&&mode==="preview"&&!d.images.qr.hidden){
+      qr='<div style="width:76px;height:76px;box-sizing:border-box;border:1px dashed #8fa6bc;color:#405872;font:12px Arial,Helvetica,sans-serif;text-align:center;line-height:74px;">QR code</div>';
+    }
+    var qrCell=qr?'<td width="99" bgcolor="#ffffff" style="padding:7px 6px;vertical-align:middle;">'+qr+'</td>':"";
+    var bannerTitle=d.bannerTitle?'<div style="font-size:15px;line-height:19px;font-weight:700;color:#132c48;overflow-wrap:anywhere;">'+esc(d.bannerTitle)+'</div>':"";
+    var bannerNote=d.bannerNote?'<div style="padding-top:5px;font-size:11px;line-height:15px;color:#405872;overflow-wrap:anywhere;">'+esc(d.bannerNote)+'</div>':"";
+    var iso=d.showBanner?isoSection(d,mode):"";
+    var hasCampaign=bannerTitle||bannerNote||qrCell;
+    var campaign=hasCampaign?
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-top:3px solid #77d94e;">'
+      +'<tr><td width="100%" bgcolor="#eef4fa" style="padding:13px 8px 13px 12px;vertical-align:middle;font-family:Arial,Helvetica,sans-serif;">'
+      +bannerTitle+bannerNote+'</td>'+qrCell
+      +'</tr></table>':"";
+    var banner=d.showBanner&&(campaign||iso)?
+      '<tr><td colspan="2" style="padding-top:18px;">'+campaign+iso+'</td></tr>':"";
+    var logo=imageHTML(d,"logo",mode);
+    return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:540px;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">'
+      +'<tr><td width="'+(logo?108:1)+'" align="center" valign="middle" style="vertical-align:middle;text-align:center;">'
+      +(logo||'&nbsp;')
+      +'</td><td valign="top" style="vertical-align:top;padding:1px 0 1px '+(logo?12:0)+'px;">'
+      +'<table role="presentation" cellpadding="0" cellspacing="0" border="0">'
+      +(d.name?'<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:24px;font-weight:700;color:#132c48;overflow-wrap:anywhere;">'+esc(d.name)+'</td></tr>':"")
+      +position+department+product
+      +'<tr><td style="padding-top:10px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td width="40" height="3" bgcolor="#77d94e" style="width:40px;height:3px;font-size:1px;line-height:3px;">&nbsp;</td></tr></table></td></tr>'
+      +contactBlock+'</table></td></tr>'+banner+'</table>';
+  }
+  function signatureHTML(d,mode){
+    var contacts=contactDetails(d).map(function(detail){
+      var value=esc(detail[1]);
+      if(detail[2]){
+        value='<a href="'+esc(detail[2])+'" style="color:#153b63;text-decoration:underline;">'+value+'</a>';
+      }
+      return '<tr><td style="padding:1px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;color:#20354a;overflow-wrap:anywhere;">'
+        +(detail[0]?'<strong>'+esc(detail[0])+':</strong> ':'')+value+'</td></tr>';
+    }).join("");
+    var layout=d.layout==="classic"?classicSignatureHTML:redesignedSignatureHTML;
+    return layout(d,mode,contacts);
+  }
   function render(){ preview.innerHTML=signatureHTML(getData(),"preview"); }
   function templates(){
     try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");}catch(e){return [];}
@@ -497,6 +544,7 @@ details[open] summary{margin-bottom:12px}
     document.getElementById("deleteBtn").disabled=!selectedId;
   }
   function applyData(d){
+    el.signatureLayout.value=d.layout==="classic"?"classic":"redesigned";
     el.fullName.value=d.name||"";
     el.position.value=d.position||"";
     el.department.value=d.department||"";

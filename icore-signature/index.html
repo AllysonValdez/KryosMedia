@@ -263,10 +263,6 @@ details[open] summary{margin-bottom:12px}
       <input id="isoNumber">
     </div>
     <div class="group">
-      <label for="isoExpiry">Certificate expiry</label>
-      <input id="isoExpiry" placeholder="Month day, year">
-    </div>
-    <div class="group">
       <label for="isoVerify">Certification body website</label>
       <input id="isoVerify" type="url" placeholder="Optional HTTPS URL">
     </div>
@@ -324,7 +320,7 @@ details[open] summary{margin-bottom:12px}
   var CERTIFICATE_QR = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUgAAAFICAAAAAAXfzjvAAAEC0lEQVR42u3dy24bMRAEwGWQ///l9TmG5ZkeUrIRVd8M61kggQa15K77khP5gwAkSJACEiRIkAISJEgBCRIkSAEJEiRIAQkSpIAECRKkgAQJEqSA/C35Wz1gDV/4/vT8u/k+d/H3NXzcqe9jRJraIEEKSJAgpdcjuz0q7Wm7vXAVPfTV38eINLVBghSQIEHqkbNela43TtcZV/g+Vb+cfh8j0tQGCVJAggSpR742j3pd1Q/v5uvs9kEj0tQGKSBBggQpv6NH3mFP7K4npuufRqSpDVJAggQpIH+2R6a9LF1nnP7+3P19fPf7GJGmNkiQAhIkSMl65Np8o+7+mGr9Md3X/azvY0Sa2iBBCkiQIN8869X3RUzP5Un74fQ6SiPS1AYpIEGCBClR4vMju/tjuvtfuuuP6ftP93Vfw+9jRJraIEEKSJAg3yyru1+lm+m63/Qc8rQXVv11un5pRJraIEEKSJAg3yzb55Cv4u9uD+z21rT3neq1RqSpDRKkgAQJUrIe2b1+8VEPS9cRqz5ZnWfe7adpvzUiTW2QIAUkSJCS9ci0Z3Wvlzx9Hnn19+5+btdHmtogQQpIkCDl37q02wt39+FM92en55Cn90s0Ik1tkAISJEiQstcju71s2hur/pleD7m7npn2VSPS1AYJUkCCBKlH7vXJq+iZu+uB3d56Dz932huNSFMbJEgBCRKkHjnrb1fY56Y9sLsu+aw+2/3+RqSpDRKkgAQJUo+c9ajd5+3+3p2+/+nrJY1IUxskSAEJEuSbpX3uT7ouOP39edoH09ednnduRJraIEEKSJAgpdcju+c4Vn8/6mnP2r8zPUfSeqSpDVJAggQJUlo5fu5Pt5+l65an7s/o+khTG6SABAkSpBzJ9n0Ru//v9tDd+12v4nnpfhu/a5vaIEEKSJAgZdYjT+2v6Z67s8LXP3X9pOsjTW2QAhIkSJCS1b5n78M+1f+qnnv6PEgj0tQGKSBBggQpez1yen+Y0+eLd3tj+rjqedYjTW2QIAUkSJAy65Hbb1D0zm5vne6LOX0fRSPS1AYJUkCCBCnXdW2c+1PlDntY9Trd6ymn55Pfm9/XiDS1QYIUkCBB6pHf97m0d07Pmez2xM+vU60/nt53bkSa2iBBCkiQIPXIWU9M+1e67rd7/Wb3cek5l0akqQ0SpIAECVKPfG5O3d/mUa9M72+4mu9vRJraIAUkSJAg5Wd75FX0tG6fTF+/+n28+znsszG1QYIUkCBBypkeeercyOr/3XXF63AfdH2kqQ1SQIIECVLO9sj1og803R+Tfs7u+UCujzS1QYIUkCBBytd16mZgRIIEKSBBggQpIEGCFJAgQYIUkCBBghSQIEEKSJAgQQpIkCBBCkiQ/1c+AAZqAquaCE8FAAAAAElFTkSuQmCC";
   var QR_WEBSITE = "https://www.icoretech.xyz/";
   var STORAGE_KEY = "icore-tech-signature-templates-v1";
-  var ids = ["signatureLayout","fullName","position","department","email","phone","website","trunkline","address","showBanner","showPay","templateName","productText","bannerTitle","bannerNote","emailLabel","trunklineLabel","phoneLabel","addressLabel","websiteLabel","qrLink","qrDestination","logoUrl","logoAlt","qrUrl","qrAlt","isoUrl","isoAlt","isoStandard","isoIssuer","isoNumber","isoExpiry","isoVerify"];
+  var ids = ["signatureLayout","fullName","position","department","email","phone","website","trunkline","address","showBanner","showPay","templateName","productText","bannerTitle","bannerNote","emailLabel","trunklineLabel","phoneLabel","addressLabel","websiteLabel","qrLink","qrDestination","logoUrl","logoAlt","qrUrl","qrAlt","isoUrl","isoAlt","isoStandard","isoIssuer","isoNumber","isoVerify"];
   var el = {};
   ids.forEach(function(id){ el[id] = document.getElementById(id); });
   var preview = document.getElementById("signaturePreview");
@@ -335,7 +331,7 @@ details[open] summary{margin-bottom:12px}
   var imageReads = {};
   var hiddenImages = {};
   var imageKeys = ["logo","qr","iso"];
-  var isoKeys = ["isoStandard","isoIssuer","isoNumber","isoExpiry","isoVerify"];
+  var isoKeys = ["isoStandard","isoIssuer","isoNumber","isoVerify"];
   var textKeys = ["productText","bannerTitle","bannerNote","emailLabel","trunklineLabel","phoneLabel","addressLabel","websiteLabel"].concat(isoKeys);
   var textDefaults = {
     productText:"iCOREPay by iCORE Technologies",
@@ -349,7 +345,6 @@ details[open] summary{margin-bottom:12px}
     isoStandard:"ISO 9001:2015",
     isoIssuer:"International Certification Authority (ICA)",
     isoNumber:"ICADOP2501035",
-    isoExpiry:"November 30, 2026",
     isoVerify:"https://www.ica-cb.com/"
   };
 
@@ -378,6 +373,7 @@ details[open] summary{margin-bottom:12px}
     settings.qrDestination=el.qrDestination.value;
     return Object.assign(settings,{
       id:selectedId,
+      isoDetailsSaved:true,
       layout:el.signatureLayout.value,
       name:el.fullName.value.trim(),
       position:el.position.value.trim(),
@@ -440,8 +436,7 @@ details[open] summary{margin-bottom:12px}
     return [
       ["ISO standard",d.isoStandard],
       ["Certification body",d.isoIssuer],
-      ["Certificate number",d.isoNumber],
-      ["Certificate expiry",d.isoExpiry]
+      ["Certificate number",d.isoNumber]
     ];
   }
 
@@ -566,11 +561,9 @@ details[open] summary{margin-bottom:12px}
     el.showPay.checked=!!d.showPay;
     el.templateName.value=d.templateName||"Untitled Template";
     textKeys.forEach(function(key){el[key].value=d[key]??textDefaults[key];});
-    if(d.isoExpiry==null){
-      var hasLegacyDetails=isoKeys.some(function(key){return !!d[key];});
-      isoKeys.forEach(function(key){
-        el[key].value=hasLegacyDetails?(d[key]||""):textDefaults[key];
-      });
+    if(!isoKeys.some(function(key){return d[key]!=null;})
+      ||(!d.isoDetailsSaved&&!Object.hasOwn(d,"isoExpiry")&&d.isoStandard===""&&d.isoIssuer===""&&d.isoNumber===""&&d.isoVerify==="")){
+      isoKeys.forEach(function(key){el[key].value=textDefaults[key];});
     }
     if(d.bannerNote==="Regulated by the Bangko Sentral ng Pilipinas") el.bannerNote.value=textDefaults.bannerNote;
     var savedQR=(d.images||{}).qr;

@@ -450,7 +450,11 @@ details[open] summary{margin-bottom:12px}
     var verify=httpsURL(d.isoVerify);
     var isPreview=mode==="preview";
     var details=isoDetails(d).filter(function(detail){return isPreview||detail[1];});
-    if(!badge&&!details.length&&!verify) return "";
+    var qr=imageHTML(d,"qr",mode);
+    var qrLink=httpsURL(d.qrLink);
+    if(qr&&qrLink) qr='<a href="'+esc(qrLink)+'" style="display:block;text-decoration:none;">'+qr+'</a>';
+    if(!badge&&!details.length&&!verify&&!qr) return "";
+    var qrCell=qr?'<td width="99" align="right" valign="middle" style="padding-left:8px;vertical-align:middle;">'+qr+'</td>':"";
     if(!badge&&isPreview&&!d.images.iso.hidden){
       badge='<div style="width:64px;height:48px;line-height:46px;box-sizing:border-box;border:1px dashed #8fa6bc;text-align:center;font-size:11px;color:#405872;">ISO badge</div>';
     }
@@ -461,10 +465,10 @@ details[open] summary{margin-bottom:12px}
     var verification=verify?'<div><a href="'+esc(verify)+'" style="color:#153b63;text-decoration:underline;">ICA website</a></div>':"";
     return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;'+(classic?"border-top:1px solid #dce4e1;":"border:1px solid #d6e4e9;border-top:0;")+'">'
       +'<tr><td bgcolor="'+(classic?"#f5f8fb":"#f3f7f8")+'" style="padding:'+(classic?"6px 9px":"7px 10px")+';font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:14px;color:#20354a;">'
-      +'<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>'
+      +'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>'
       +(badge?'<td valign="middle" style="padding-right:8px;">'+badge+'</td>':"")
       +'<td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:14px;color:#20354a;">'
-      +(classic?'<strong>Quality Management System Certification</strong>':'<div style="padding-bottom:1px;font-size:11px;line-height:14px;color:#10283d;"><strong>Quality Management System Certification</strong></div>')+lines+verification+'</td>'
+      +(classic?'<strong>Quality Management System Certification</strong>':'<div style="padding-bottom:1px;font-size:11px;line-height:14px;color:#10283d;"><strong>Quality Management System Certification</strong></div>')+lines+verification+'</td>'+qrCell
       +'</tr></table></td></tr></table>';
   }
 
@@ -473,10 +477,6 @@ details[open] summary{margin-bottom:12px}
     var department=d.department?'<div style="font-size:12px;line-height:15px;color:#43596d;overflow-wrap:anywhere;">'+esc(d.department)+'</div>':"";
     var product=d.showPay&&d.productText?'<div style="margin-top:3px;font-size:12px;line-height:15px;color:#245733;overflow-wrap:anywhere;">'+esc(d.productText)+'</div>':"";
     var contactBlock=contacts?'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-top:5px;border-top:1px solid #d6e4e9;"><tr><td height="4" style="font-size:1px;line-height:4px;">&nbsp;</td></tr>'+contacts+'</table>':"";
-    var qr=imageHTML(d,"qr",mode);
-    var qrLink=httpsURL(d.qrLink);
-    if(qr&&qrLink) qr='<a href="'+esc(qrLink)+'" style="display:block;text-decoration:none;">'+qr+'</a>';
-    var qrCell=qr?'<td width="107" align="center" valign="middle" bgcolor="#ffffff" style="width:107px;padding:3px 4px;vertical-align:middle;">'+qr+'</td>':"";
     var bannerTitle=d.bannerTitle?'<div style="font-size:14px;line-height:18px;font-weight:700;color:#ffffff;overflow-wrap:anywhere;">'+esc(d.bannerTitle)+'</div>':"";
     var bannerNote=d.bannerNote?'<div style="padding-top:3px;font-size:11px;line-height:15px;color:#dcebcf;overflow-wrap:anywhere;">'+esc(d.bannerNote)+'</div>':"";
     var logo=imageHTML(d,"logo",mode);
@@ -486,10 +486,10 @@ details[open] summary{margin-bottom:12px}
     var identity='<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border:1px solid #d6e4e9;border-top:4px solid #82d852;">'
       +'<tr>'+brand+'<td valign="middle" bgcolor="#ffffff" style="padding:8px 9px;font-family:Arial,Helvetica,sans-serif;vertical-align:middle;">'
       +name+position+department+product+contactBlock+'</td></tr></table>';
-    var campaign=(bannerTitle||bannerNote||qrCell)?
+    var campaign=(bannerTitle||bannerNote)?
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border:1px solid #10283d;">'
       +'<tr><td bgcolor="#10283d" valign="middle" style="padding:7px 9px;vertical-align:middle;font-family:Arial,Helvetica,sans-serif;">'
-      +bannerTitle+bannerNote+'</td>'+qrCell+'</tr></table>':"";
+      +bannerTitle+bannerNote+'</td>'+'</tr></table>':"";
     var iso=d.showBanner?isoSection(d,mode):"";
     var footer=d.showBanner&&(campaign||iso)?
       '<tr><td style="padding-top:5px;">'+campaign+iso+'</td></tr>':"";
@@ -501,21 +501,14 @@ details[open] summary{margin-bottom:12px}
     var department=d.department?'<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:15px;font-style:italic;color:#526278;">'+esc(d.department)+'</td></tr>':"";
     var product=d.showPay&&d.productText?'<tr><td style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:15px;font-weight:700;color:#247c42;">'+esc(d.productText)+'</td></tr>':"";
     var contactBlock=contacts?'<tr><td style="padding-top:6px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0">'+contacts+'</table></td></tr>':"";
-    var qr=imageHTML(d,"qr",mode);
-    var qrLink=httpsURL(d.qrLink);
-    if(qr&&qrLink) qr='<a href="'+esc(qrLink)+'">'+qr+'</a>';
-    if(!qr&&mode==="preview"&&!d.images.qr.hidden){
-      qr='<div style="width:76px;height:76px;box-sizing:border-box;border:1px dashed #8fa6bc;color:#405872;font:12px Arial,Helvetica,sans-serif;text-align:center;line-height:74px;">QR code</div>';
-    }
-    var qrCell=qr?'<td width="99" bgcolor="#ffffff" style="padding:3px 4px;vertical-align:middle;">'+qr+'</td>':"";
     var bannerTitle=d.bannerTitle?'<div style="font-size:14px;line-height:18px;font-weight:700;color:#132c48;overflow-wrap:anywhere;">'+esc(d.bannerTitle)+'</div>':"";
     var bannerNote=d.bannerNote?'<div style="padding-top:3px;font-size:11px;line-height:15px;color:#405872;overflow-wrap:anywhere;">'+esc(d.bannerNote)+'</div>':"";
     var iso=d.showBanner?isoSection(d,mode):"";
-    var hasCampaign=bannerTitle||bannerNote||qrCell;
+    var hasCampaign=bannerTitle||bannerNote;
     var campaign=hasCampaign?
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-top:3px solid #77d94e;">'
       +'<tr><td width="100%" bgcolor="#eef4fa" style="padding:7px 8px 7px 9px;vertical-align:middle;font-family:Arial,Helvetica,sans-serif;">'
-      +bannerTitle+bannerNote+'</td>'+qrCell
+      +bannerTitle+bannerNote+'</td>'
       +'</tr></table>':"";
     var banner=d.showBanner&&(campaign||iso)?
       '<tr><td colspan="2" style="padding-top:8px;">'+campaign+iso+'</td></tr>':"";
